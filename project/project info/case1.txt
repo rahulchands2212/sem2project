@@ -1,0 +1,23 @@
+room number input liya .
+
+room number number he hai ya nhi wo check kiya .
+
+loop  0 se 9 tak chalaya beacuse hotel me 10 rooms hai  .
+
+Rooms[i].roomNo == roomNumber 
+    . Rooms ek hotel class ka obejct hai hum ne Rooms[10] ker ke 0 se 9 tak banye hai 
+    . Rooms[i] se index me ja rahe hai
+    . roomNo class member hai 
+Rooms[i].roomNo == roomNumber hum compare ker rahe hai room number exist ker tha hai ya nhi  .
+ye condition true hui to found ko true ker do 
+
+Rooms[i].status == 0 hai andar jao
+roomNumber input lo 
+name input lo
+phone number 
+status = 1
+the reservation successfull
+
+if(!found){
+    to room exist nhi ker tha hai 
+} 
