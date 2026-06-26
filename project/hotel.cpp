@@ -8,7 +8,7 @@ class Hotel
 public:
     int roomNo;
     string name;
-    long long int phone;
+    string phone;
     int status;
 };
 
@@ -40,21 +40,42 @@ int main()
         cout << "select>";
         cin >> choice; // update choice;
 
+        // this variable use inside switch
         bool found = false;
+        string input;
+        bool valid = true;
+
         switch (choice) // switch
         {
         case 1:
             cout << "Reserve Room Selected" << endl;
-            int roomNumber;
 
-            cout << "Enter Room Number: ";
-            while (!(cin >> roomNumber))
-            { // this use for handing char input on roomNumber
-                cout << "invaild input ! \nEnter numbers only: ";
-                cin.clear();
-                cin.ignore(1000, '\n');
+            int roomNumber;
+            while (true)
+            {
+                cout << "Enter Room Number: ";
+                getline(cin >> ws, input); // take input room number inside  input string
+                valid = true;              // reset;
+
+                for (char ch : input) // for each loop
+                {
+                    if (!isdigit(ch)) // check char by char that actual digit he hai ya nhi
+                    {
+                        valid = false; // agar condition true wo digit nhi hai
+                        break;         // for each loop se bar
+                    }
+                }
+
+                if (valid) // condition check
+                {
+                    roomNumber = stoi(input); // if true wo roomNumber ke andar assign ker do . stoi use for convert string to int
+                    break;
+                }
+                else
+                {
+                    cout << "invalid roomNumber" << endl;
+                }
             }
-            cin.ignore();
 
             for (int i = 0; i < 10; i++)
             {
@@ -63,17 +84,61 @@ int main()
                     found = true;
                     if (Rooms[i].status == 0) // check room status
                     {
-                        cout << "Enter Customer Name: ";
-                        getline(cin, Rooms[i].name);
+                        while (true)
+                        {
+                            cout << "Enter Customer Name: ";
+                            getline(cin >> ws, Rooms[i].name); // ws means whitespace
+                            valid = true;                      // reset
 
-                        cout << "Enter Phone Number: ";
-                        while (!(cin >> Rooms[i].phone))
-                        { // this use for handing char input on phone
-                            cout << "invaild input ! \nEnter phone number only: ";
-                            cin.clear();
-                            cin.ignore(1000, '\n');
+                            for (char ch : Rooms[i].name) // for each loop
+                            {
+                                if (!(isalpha(ch) || ch == ' ')) // check name is alpha or space allow only
+                                {
+                                    valid = false;
+                                    break;
+                                }
+                            }
+
+                            if (valid)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                cout << "invaild name" << endl;
+                            }
                         }
-                        cin.ignore();
+
+                        while (true)
+                        {
+                            cout << "Enter Phone Number: ";
+                            getline(cin >> ws, Rooms[i].phone);
+                            valid = true;
+
+                            for (char ch : Rooms[i].phone) // for each loop
+                            {
+                                if (!isdigit(ch)) // check char by char that actual digit he hai ya nhi
+                                {
+                                    valid = false; // agar condition true wo digit nhi hai
+                                    break;         // for each loop se bar
+                                }
+                            }
+
+                          
+                            if(!valid)
+                            {
+                                cout << "enter number only " << endl;
+                                continue;
+                            }
+
+                            if (Rooms[i].phone.length() != 10)
+                            {
+                                cout << "phone number must be 10 digit " << endl;
+                                continue;
+                            }
+
+                            break;
+                        }
 
                         Rooms[i].status = 1;
 
@@ -83,6 +148,7 @@ int main()
                     else
                     {
                         cout << "Room Not Available" << endl;
+                        break;
                     }
                 }
             }
@@ -91,7 +157,7 @@ int main()
                 cout << "Room does not exist." << endl;
             }
             break;
-            //------------------------------------------------------------------------------------------------
+            //-----------------------------------------------------------------------------------------------------
         case 2:
             cout << "Check-In Customer Selected" << endl;
             // input
@@ -154,7 +220,7 @@ int main()
                     {
                         Rooms[i].status = 0;
                         Rooms[i].name = "";
-                        Rooms[i].phone = 0;
+                        Rooms[i].phone = "";
 
                         cout << "Booking cancel successful" << endl;
                     }
